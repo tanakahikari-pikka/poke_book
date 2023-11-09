@@ -1,30 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:poke_book/poke_repository.dart';
+import 'package:poke_book/pokemon_tile.dart';
 
-class PokePage extends StatelessWidget {
+// ignore: use_key_in_widget_constructors
+class PokePage extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final res = fetchPokemons();
-    // final pokes
-    return Center(
-      child: Text("d"),
-    );
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pokemons = ref.watch(pokemonsFutureProvider);
 
-  Future<String> fetchPokemons() async {
-    final response = await http.post(
-      Uri.parse('https://graphql-pokemon2.vercel.app/'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: '{ "query": "{ pokemons(first: 10) { id name } }" }',
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('PokeBook'),
+      ),
+      body: pokemons.when(
+        data: (pokemonsList) {
+          print(pokemonsList);
+          return ListView.builder(
+            itemCount: pokemonsList.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: PokemonTile(
+                  name: pokemonsList[index],
+                  type: 'type',
+                  imageUrl: 'https://via.placeholder.com/150',
+                ),
+                //  Text(pokemonsList[index]),
+              );
+            },
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(child: Text('Error: $error')),
+      ),
     );
-    if (response.statusCode == 200) {
-      print(response.body);
-      // ここでレスポンスを処理できます
-      return response.body;
-    } else {
-      throw Exception('Failed to load data');
-    }
   }
 }
