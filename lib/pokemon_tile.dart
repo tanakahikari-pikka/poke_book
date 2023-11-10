@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
 class PokemonTile extends StatelessWidget {
-  const PokemonTile(
-      {Key? key,
-      required this.name,
-      required this.type,
-      required this.imageUrl})
-      : super(key: key);
+  const PokemonTile({
+    Key? key,
+    required this.name,
+    required this.imageUrl,
+  }) : super(key: key);
 
   final String name;
-  final String type;
   final String imageUrl;
 
   @override
@@ -17,7 +15,6 @@ class PokemonTile extends StatelessWidget {
     return ListTile(
       leading: Image.network(imageUrl),
       title: Text(name),
-      subtitle: Text(type),
     );
   }
 }

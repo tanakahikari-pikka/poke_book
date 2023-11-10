@@ -21,7 +21,6 @@ Pokemon _$PokemonFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Pokemon {
   String get name => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +33,7 @@ abstract class $PokemonCopyWith<$Res> {
   factory $PokemonCopyWith(Pokemon value, $Res Function(Pokemon) then) =
       _$PokemonCopyWithImpl<$Res, Pokemon>;
   @useResult
-  $Res call({String name, String type, String imageUrl});
+  $Res call({String name, String imageUrl});
 }
 
 /// @nodoc
@@ -51,17 +50,12 @@ class _$PokemonCopyWithImpl<$Res, $Val extends Pokemon>
   @override
   $Res call({
     Object? name = null,
-    Object? type = null,
     Object? imageUrl = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
               as String,
       imageUrl: null == imageUrl
           ? _value.imageUrl
@@ -78,7 +72,7 @@ abstract class _$$CreateImplCopyWith<$Res> implements $PokemonCopyWith<$Res> {
       __$$CreateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String type, String imageUrl});
+  $Res call({String name, String imageUrl});
 }
 
 /// @nodoc
@@ -93,17 +87,12 @@ class __$$CreateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
-    Object? type = null,
     Object? imageUrl = null,
   }) {
     return _then(_$CreateImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
               as String,
       imageUrl: null == imageUrl
           ? _value.imageUrl
@@ -116,8 +105,7 @@ class __$$CreateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CreateImpl implements _Create {
-  const _$CreateImpl(
-      {required this.name, required this.type, required this.imageUrl});
+  const _$CreateImpl({required this.name, required this.imageUrl});
 
   factory _$CreateImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateImplFromJson(json);
@@ -125,13 +113,11 @@ class _$CreateImpl implements _Create {
   @override
   final String name;
   @override
-  final String type;
-  @override
   final String imageUrl;
 
   @override
   String toString() {
-    return 'Pokemon(name: $name, type: $type, imageUrl: $imageUrl)';
+    return 'Pokemon(name: $name, imageUrl: $imageUrl)';
   }
 
   @override
@@ -140,14 +126,13 @@ class _$CreateImpl implements _Create {
         (other.runtimeType == runtimeType &&
             other is _$CreateImpl &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, type, imageUrl);
+  int get hashCode => Object.hash(runtimeType, name, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -166,15 +151,12 @@ class _$CreateImpl implements _Create {
 abstract class _Create implements Pokemon {
   const factory _Create(
       {required final String name,
-      required final String type,
       required final String imageUrl}) = _$CreateImpl;
 
   factory _Create.fromJson(Map<String, dynamic> json) = _$CreateImpl.fromJson;
 
   @override
   String get name;
-  @override
-  String get type;
   @override
   String get imageUrl;
   @override

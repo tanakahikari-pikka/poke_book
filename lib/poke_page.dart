@@ -7,31 +7,35 @@ import 'package:poke_book/pokemon_tile.dart';
 class PokePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pokemons = ref.watch(pokemonsFutureProvider);
+    final pokemonsConstruct = ref.watch(pokemonsProvider);
+    final pokemons = pokemonsConstruct.when(
+      data: (pokemonsData) => AsyncValue.data(pokemonsData),
+      loading: () => const AsyncValue.loading(),
+      error: (error, stack) => AsyncValue.error(error, stack),
+    );
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('PokeBook'),
       ),
       body: pokemons.when(
-        data: (pokemonsList) {
-          print(pokemonsList);
+        data: (pokemonsData) {
           return ListView.builder(
-            itemCount: pokemonsList.length,
+            itemCount: pokemonsData['pokemonsList'].length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: PokemonTile(
-                  name: pokemonsList[index],
-                  type: 'type',
-                  imageUrl: 'https://via.placeholder.com/150',
-                ),
-                //  Text(pokemonsList[index]),
+              return PokemonTile(
+                name: pokemonsData['pokemonsList'][index],
+                imageUrl: pokemonsData['pokemonsImageList'][index],
               );
             },
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text('Error: $error')),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        error: (error, stack) => Center(
+          child: Text(error.toString()),
+        ),
       ),
     );
   }

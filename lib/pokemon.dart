@@ -8,7 +8,6 @@ class Pokemon with _$Pokemon {
   // freezedを用いて実装
   const factory Pokemon({
     required String name,
-    required String type,
     required String imageUrl,
   }) = _Create;
   factory Pokemon.fromJson(Map<String, dynamic> json) =>
