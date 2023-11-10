@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
-final pokemonsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+final pokemonsFutureProvider =
+    FutureProvider<Map<String, dynamic>>((ref) async {
   final pokemonsData = await fetchPokemons();
   final decodedPokemons = jsonDecode(pokemonsData)['data']['pokemons'] as List;
   final List<String> pokemonsList =
@@ -13,6 +14,17 @@ final pokemonsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
     'pokemonsList': pokemonsList,
     'pokemonsImageList': pokemonsImageList,
   };
+});
+
+final pokemonsProvider = Provider((ref) {
+  final pokemonsConstruct = ref.watch(pokemonsFutureProvider);
+  final pokemons = pokemonsConstruct.when(
+    data: (pokemonsData) => AsyncValue.data(pokemonsData),
+    loading: () => const AsyncValue.loading(),
+    error: (error, stack) => AsyncValue.error(error, stack),
+  );
+
+  return pokemons;
 });
 
 fetchPokemons() async {

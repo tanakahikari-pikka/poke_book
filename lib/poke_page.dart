@@ -7,12 +7,7 @@ import 'package:poke_book/pokemon_tile.dart';
 class PokePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pokemonsConstruct = ref.watch(pokemonsProvider);
-    final pokemons = pokemonsConstruct.when(
-      data: (pokemonsData) => AsyncValue.data(pokemonsData),
-      loading: () => const AsyncValue.loading(),
-      error: (error, stack) => AsyncValue.error(error, stack),
-    );
+    final pokemons = ref.watch(pokemonsProvider);
 
     return Scaffold(
       appBar: AppBar(
