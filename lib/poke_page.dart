@@ -14,13 +14,13 @@ class PokePage extends ConsumerWidget {
         title: const Text('PokeBook'),
       ),
       body: pokemons.when(
-        data: (pokemonsData) {
+        data: (pokemons) {
           return ListView.builder(
-            itemCount: pokemonsData['pokemonsList'].length,
+            itemCount: pokemons['pokemonsList'].length,
             itemBuilder: (context, index) {
               return PokemonTile(
-                name: pokemonsData['pokemonsList'][index],
-                imageUrl: pokemonsData['pokemonsImageList'][index],
+                name: pokemons['pokemonsList'][index],
+                imageUrl: pokemons['pokemonsImageList'][index],
               );
             },
           );
